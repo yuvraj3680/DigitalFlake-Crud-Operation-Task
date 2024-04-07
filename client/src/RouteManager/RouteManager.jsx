@@ -10,6 +10,7 @@ import AddCategory from '../components/Categorypage/AddCategory';
 import AddProducts from '../components/Productspage/AddProducts';
 import UpdateProducts from '../components/Productspage/UpdateProducts';
 import UpdateCategory from '../components/Categorypage/UpdateCategory';
+import Logout from '../components/User/Logout';
 const RouteManager = () => {
   return (
     <>
@@ -22,9 +23,11 @@ const RouteManager = () => {
         <Route path="/category" element={<Category/>}/>
         <Route path="/addcategory" element={<AddCategory/>}/>
         <Route path="/product" element={<Products/>}/>
+        <Route path="/logout" element={<Logout/>}/>
         <Route path="/addproduct" element={<AddProducts/>}/>
         <Route path="/updateproduct/:id" element={<UpdateProducts/>}/>
         <Route path="/updatecategory/:id" element={<UpdateCategory/>}/>
+        
         
 
               

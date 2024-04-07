@@ -53,17 +53,17 @@ const Category = () => {
       });
   };
 
-  // const handleSearch = (value) => {
-  //   if (value && typeof value === 'string') {
-  //     const filtered = categories.filter(category =>
-  //       typeof category.name === 'string' &&
-  //       category.name.toLowerCase().includes(value.toLowerCase())
-  //     );
-  //     setFilteredCategories(filtered);
-  //   } else {
+  const handleSearch = (value) => {
+    if (value && typeof value === 'string') {
+      const filtered = categories.filter(category =>
+        typeof category.name === 'string' &&
+        category.name.toLowerCase().includes(value.toLowerCase())
+      );
+      setFilteredCategories(filtered);
+    } else {
      
-  //   }
-  // };
+    }
+  };
 
   const columns = [
     { field: "id", headerName: "ID", width: 100 },

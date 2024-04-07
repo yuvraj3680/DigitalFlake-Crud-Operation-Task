@@ -17,14 +17,12 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import HomeIcon from '@mui/icons-material/Home';
-import { Outlet, useNavigate } from 'react-router-dom';
 import CategoryIcon from '@mui/icons-material/Category';
 import InventoryIcon from '@mui/icons-material/Inventory';
-
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useState } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -96,7 +94,9 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const Header = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+ 
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -106,48 +106,69 @@ const Header = () => {
     setOpen(false);
   };
 
+  
+
+  const handleLoginLogout = () => {
+    if (isLoggedIn) {
+      
+      setIsLoggedIn(false);
+      
+      navigate('/logout');
+    } else {
+      
+      navigate('/login');
+    }
+  };
+
   return (
     <>
-    
-
-
-
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar position="fixed" open={open} sx={{ bgcolor: '#7C0089' }}>
-      <Toolbar>
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          onClick={handleDrawerOpen}
-          edge="start"
-          sx={{
-            marginRight: 5,
-            ...(open && { display: 'none' }),
-          }}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Box sx={{ flexGrow: 1 }}>
-          <Typography variant="h6" noWrap>
-            Digitalflake
-          </Typography>
-        </Box>
-        <AccountCircleIcon onClick={() => { navigate("/login") }} />
-      </Toolbar>
-    </AppBar>
-      <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
-        
-            <ListItem onClick={()=>{
-              navigate('/');
-            }}  disablePadding sx={{ display: 'block' }}>
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <AppBar position="fixed" open={open} sx={{ bgcolor: '#7C0089' }}>
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={{
+                marginRight: 5,
+                ...(open && { display: 'none' }),
+              }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Box sx={{ flexGrow: 1 }}>
+              <Typography variant="h6" noWrap>
+                <img
+                  style={{ bgcolor: 'fff', width: '80px', height: '80px' }}
+                  src="https://digitalflake.com/wp-content/uploads/2023/04/DF_logo-transparent2.png"
+                  alt="digital flake"
+                />
+              </Typography>
+            </Box>
+            <div>
+        <AccountCircleIcon onClick={handleLoginLogout} />
+        {/* Display 'Logout' if user is logged in, 'Login' otherwise */}
+        <span>{isLoggedIn ? 'Logout' : 'Login'}</span>
+      </div>
+          </Toolbar>
+        </AppBar>
+        <Drawer variant="permanent" open={open}>
+          <DrawerHeader>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            </IconButton>
+          </DrawerHeader>
+          <Divider />
+          <List>
+            <ListItem
+              onClick={() => {
+                navigate('/');
+              }}
+              disablePadding
+              sx={{ display: 'block' }}
+            >
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -168,9 +189,13 @@ const Header = () => {
               </ListItemButton>
             </ListItem>
 
-            <ListItem onClick={()=>{
-              navigate('/category');
-            }} disablePadding sx={{ display: 'block' }}>
+            <ListItem
+              onClick={() => {
+                navigate('/category');
+              }}
+              disablePadding
+              sx={{ display: 'block' }}
+            >
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -191,9 +216,13 @@ const Header = () => {
               </ListItemButton>
             </ListItem>
 
-            <ListItem onClick={()=>{
-              navigate('/product');
-            }} disablePadding sx={{ display: 'block' }}>
+            <ListItem
+              onClick={() => {
+                navigate('/product');
+              }}
+              disablePadding
+              sx={{ display: 'block' }}
+            >
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -213,21 +242,22 @@ const Header = () => {
                 <ListItemText primary="Products" sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
-          
-        </List>
-        <Divider />
-        
-      </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader />
-       
-        <Outlet/>
+          </List>
+          <Divider />
+        </Drawer>
+        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+          <DrawerHeader />
+          <Outlet />
+        </Box>
       </Box>
-    </Box>
-      
-
     </>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
+
+
+
+
+
+
